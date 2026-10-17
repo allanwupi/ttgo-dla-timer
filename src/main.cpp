@@ -22,7 +22,7 @@ void setup() {
   tft.fillScreen(BACKGROUND_COLOUR);
   tft.setTextColor(TEXT_COLOUR, BACKGROUND_COLOUR);
   tft.setTextFont(0);
-  tft.setTextSize(3);
+  tft.setTextSize(2);
   randomSeed(analogRead(RANDOM_SEED_PIN));
 
   for (int x = 0; x < 30; x++) {

@@ -2,17 +2,17 @@
 #include "simulation.h"
 
 // Treat these colours as constants
-uint32_t RGB_TEXT_COLOUR = TFT_GREEN;
-uint32_t BW_TEXT_COLOUR = TFT_SILVER;
-uint32_t RGB_LIVE_COLOUR = TFT_GREEN;
+uint32_t RGB_TEXT_COLOUR = TFT_WHITE;
+uint32_t BW_TEXT_COLOUR = TFT_GOLD;
+uint32_t RGB_LIVE_COLOUR = TFT_DARKGREY;
 uint32_t BW_LIVE_COLOUR = TFT_DARKGREY;
 uint32_t BACKGROUND_COLOUR = TFT_BLACK;
 
-uint32_t TEXT_COLOUR = BW_TEXT_COLOUR;
-uint32_t LIVE_COLOUR = BW_LIVE_COLOUR;
+uint32_t TEXT_COLOUR = RGB_TEXT_COLOUR;
+uint32_t LIVE_COLOUR = RGB_LIVE_COLOUR;
 uint32_t TEMP = BACKGROUND_COLOUR; // holds live colour/background
 
-bool ENABLE_COLOUR = false;
+bool ENABLE_COLOUR = true;
 bool SHOW_PARTICLES = true;
 
 uint32_t HUE[NUM_COLOURS] = {
@@ -45,16 +45,16 @@ int STAGE[NUM_COLOURS] = {
   100,
   200,
   300,
-  500,
-  800,
+  450,
+  600,
+  900,
   1200,
-  1600,
-  2000,
+  1800,
   2400,
   3000,
 };
 
-uint32_t *COLOURSCHEME = SHADE;
+uint32_t *COLOURSCHEME = HUE;
 
 void toggleColours(TFT_eSPI *tft) {
   ENABLE_COLOUR = !ENABLE_COLOUR;
