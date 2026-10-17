@@ -2,7 +2,7 @@
 #define SIMULATION_H
 #include <TFT_eSPI.h>
 
-#define MAX_PARTICLE_COUNT 4000
+#define MAX_PARTICLE_COUNT 3000
 #define NUM_WALK_DIRECTIONS 8 // Moore
 #define MAX_SPAWN_RADIUS 85
 #define COLS 320

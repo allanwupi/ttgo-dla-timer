@@ -8,12 +8,12 @@ uint32_t RGB_LIVE_COLOUR = TFT_GREEN;
 uint32_t BW_LIVE_COLOUR = TFT_DARKGREY;
 uint32_t BACKGROUND_COLOUR = TFT_BLACK;
 
-uint32_t TEXT_COLOUR = RGB_TEXT_COLOUR;
-uint32_t LIVE_COLOUR = RGB_LIVE_COLOUR;
-uint32_t TEMP = LIVE_COLOUR; // holds live colour/background
+uint32_t TEXT_COLOUR = BW_TEXT_COLOUR;
+uint32_t LIVE_COLOUR = BW_LIVE_COLOUR;
+uint32_t TEMP = BACKGROUND_COLOUR; // holds live colour/background
 
-bool ENABLE_COLOUR = true;
-bool SHOW_PARTICLES = true;
+bool ENABLE_COLOUR = false;
+bool SHOW_PARTICLES = false;
 
 uint32_t HUE[NUM_COLOURS] = {
   TFT_WHITE,
@@ -51,10 +51,10 @@ int STAGE[NUM_COLOURS] = {
   1600,
   2000,
   2500,
-  4000,
+  3000,
 };
 
-uint32_t *COLOURSCHEME = HUE;
+uint32_t *COLOURSCHEME = SHADE;
 
 void toggleColours(TFT_eSPI *tft) {
   ENABLE_COLOUR = !ENABLE_COLOUR;
