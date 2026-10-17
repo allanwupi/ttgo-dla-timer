@@ -9,8 +9,8 @@
 #define COLS 170
 #define CENTRE_Y 160
 #define CENTRE_X 85
-#define TEXT_OFFSET 20
-#define NUM_COLOURS 12
+#define TEXT_OFFSET 12
+#define NUM_COLOURS 10
 
 typedef enum {
   OUT_OF_BOUNDS = -3,
