@@ -41,6 +41,7 @@ extern uint32_t *COLOURSCHEME;
 extern bool ENABLE_COLOUR;
 extern bool SHOW_PARTICLES;
 
+extern int OLD_PARTICLE_COUNT;
 extern int GLOBAL_PARTICLE_COUNT;
 extern int VECTOR_X[NUM_WALK_DIRECTIONS];
 extern int VECTOR_Y[NUM_WALK_DIRECTIONS];

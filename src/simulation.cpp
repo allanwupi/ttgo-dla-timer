@@ -2,6 +2,7 @@
 #include "simulation.h"
 #include "math.h"
 
+int OLD_PARTICLE_COUNT = 1;
 int GLOBAL_PARTICLE_COUNT = 1;
 
 int VECTOR_X[NUM_WALK_DIRECTIONS] = {1, 1, 0, -1, -1, -1, 0, 1};
@@ -109,7 +110,8 @@ void simulate(int grid[][COLS], TFT_eSPI *tft) {
     drawGrid(grid, tft);
     draw_screen = false;
     tft->setCursor(0,0);
-    if (SHOW_PARTICLES) tft->printf("%-5d", GLOBAL_PARTICLE_COUNT);
+    if (SHOW_PARTICLES)
+        tft->printf("%01d:%02d ", GLOBAL_PARTICLE_COUNT/600, GLOBAL_PARTICLE_COUNT/10 % 60);
     else tft->printf("     ");
   }
 }

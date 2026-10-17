@@ -9,11 +9,11 @@ uint32_t BW_LIVE_COLOUR = TFT_DARKGREY;
 uint32_t BACKGROUND_COLOUR = TFT_BLACK;
 
 uint32_t TEXT_COLOUR = BW_TEXT_COLOUR;
-uint32_t LIVE_COLOUR = BACKGROUND_COLOUR;
-uint32_t TEMP = BW_LIVE_COLOUR; // holds live colour/background
+uint32_t LIVE_COLOUR = BW_LIVE_COLOUR;
+uint32_t TEMP = BACKGROUND_COLOUR; // holds live colour/background
 
 bool ENABLE_COLOUR = false;
-bool SHOW_PARTICLES = false;
+bool SHOW_PARTICLES = true;
 
 uint32_t HUE[NUM_COLOURS] = {
   TFT_WHITE,

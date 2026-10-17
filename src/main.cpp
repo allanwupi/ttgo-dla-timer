@@ -4,21 +4,25 @@
 
 #define DEFAULT_ROTATION 1
 #define RANDOM_SEED_PIN 1
+#define DELAY_MILLIS 100
 
 TFT_eSPI tft = TFT_eSPI();
 int world[ROWS][COLS] = {0};
+int prev;
+int calculated_delay;
 
 bool LEFT_BUTTON(void);
 bool RIGHT_BUTTON(void);
+bool TIMER = true;
 
 void setup() {
-  // Serial.begin(115200);
+  Serial.begin(115200);
   tft.init();
   tft.setRotation(DEFAULT_ROTATION);
   tft.fillScreen(BACKGROUND_COLOUR);
   tft.setTextColor(TEXT_COLOUR, BACKGROUND_COLOUR);
   tft.setTextFont(0);
-  tft.setTextSize(1);
+  tft.setTextSize(3);
   randomSeed(analogRead(RANDOM_SEED_PIN));
 
   for (int x = 0; x < 30; x++) {
@@ -33,12 +37,19 @@ void loop() {
   if (LEFT_BUTTON()) toggleColours(&tft);
   if (RIGHT_BUTTON()) toggleParticles(&tft);
   if (GLOBAL_PARTICLE_COUNT >= MAX_PARTICLE_COUNT) {
+    toggleColours(&tft);
     drawGrid(world, &tft); // removes last live particle
     tft.setCursor(0,0);
-    tft.printf("     "); // hides particle count
-    delay(100);
+    tft.printf("TIME "); // hides particle count
+    delay(999999999);
   } else {
+    prev = millis();
+    OLD_PARTICLE_COUNT = GLOBAL_PARTICLE_COUNT;
     simulate(world, &tft);
+    if (TIMER && OLD_PARTICLE_COUNT < GLOBAL_PARTICLE_COUNT) {
+        calculated_delay = DELAY_MILLIS-millis()+prev;
+        if (calculated_delay > 0) delay(calculated_delay);
+    }
   }
 }
 
