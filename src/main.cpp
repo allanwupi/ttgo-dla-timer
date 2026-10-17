@@ -41,7 +41,7 @@ void loop() {
     toggleColours(&tft);
     drawGrid(world, &tft); // removes last live particle
     tft.setCursor(0,0);
-    tft.printf(" TIME "); // hides particle count
+    tft.drawString("       ", CENTRE_X, TEXT_OFFSET); // hides particle count
     delay(999999999);
   } else {
     prev = millis();

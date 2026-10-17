@@ -115,9 +115,10 @@ void simulate(int grid[][COLS], TFT_eSPI *tft) {
     if (SHOW_PARTICLES) {
         remaining = MAX_PARTICLE_COUNT - GLOBAL_PARTICLE_COUNT;
         snprintf(buffer, sizeof(buffer), " %01d:%02d ", remaining/600, remaining/10 % 60);
-        tft->drawString(buffer, CENTRE_X, 10);
+        tft->drawString(buffer, CENTRE_X, TEXT_OFFSET);
+    } else {
+        tft->drawString("       ", CENTRE_X, TEXT_OFFSET);
     }
-    else tft->printf("     ");
   }
 }
 
