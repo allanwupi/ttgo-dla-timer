@@ -2,7 +2,7 @@
 #include <TFT_eSPI.h>
 #include "simulation.h"
 
-#define DEFAULT_ROTATION 1
+#define DEFAULT_ROTATION 4
 #define RANDOM_SEED_PIN 1
 #define DELAY_MILLIS 100
 
@@ -21,8 +21,9 @@ void setup() {
   tft.setRotation(DEFAULT_ROTATION);
   tft.fillScreen(BACKGROUND_COLOUR);
   tft.setTextColor(TEXT_COLOUR, BACKGROUND_COLOUR);
+  tft.setTextDatum(TC_DATUM); 
   tft.setTextFont(0);
-  tft.setTextSize(2);
+  tft.setTextSize(5);
   randomSeed(analogRead(RANDOM_SEED_PIN));
 
   for (int x = 0; x < 30; x++) {
@@ -40,7 +41,7 @@ void loop() {
     toggleColours(&tft);
     drawGrid(world, &tft); // removes last live particle
     tft.setCursor(0,0);
-    tft.printf("TIME "); // hides particle count
+    tft.printf(" TIME "); // hides particle count
     delay(999999999);
   } else {
     prev = millis();

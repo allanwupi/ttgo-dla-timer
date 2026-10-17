@@ -5,10 +5,10 @@
 #define MAX_PARTICLE_COUNT 3000
 #define NUM_WALK_DIRECTIONS 8 // Moore
 #define MAX_SPAWN_RADIUS 85
-#define COLS 320
-#define ROWS 170
-#define CENTRE_X 160
-#define CENTRE_Y 85
+#define ROWS 320
+#define COLS 170
+#define CENTRE_Y 160
+#define CENTRE_X 85
 #define NUM_COLOURS 10
 
 typedef enum {

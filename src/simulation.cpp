@@ -4,6 +4,7 @@
 
 int OLD_PARTICLE_COUNT = 0;
 int GLOBAL_PARTICLE_COUNT = 0;
+char buffer[7];
 
 int VECTOR_X[NUM_WALK_DIRECTIONS] = {1, 1, 0, -1, -1, -1, 0, 1};
 int VECTOR_Y[NUM_WALK_DIRECTIONS] = {0, 1, 1, 1, 0, -1, -1, -1};
@@ -113,7 +114,8 @@ void simulate(int grid[][COLS], TFT_eSPI *tft) {
     tft->setCursor(0,0);
     if (SHOW_PARTICLES) {
         remaining = MAX_PARTICLE_COUNT - GLOBAL_PARTICLE_COUNT;
-        tft->printf("%01d:%02d ", remaining/600, remaining/10 % 60);
+        snprintf(buffer, sizeof(buffer), " %01d:%02d ", remaining/600, remaining/10 % 60);
+        tft->drawString(buffer, CENTRE_X, 10);
     }
     else tft->printf("     ");
   }
