@@ -35,6 +35,7 @@ void setup() {
 }
 
 void loop() {
+  prev = millis();
   if (LEFT_BUTTON()) toggleColours(&tft);
   if (RIGHT_BUTTON()) toggleParticles(&tft);
   if (GLOBAL_PARTICLE_COUNT >= MAX_PARTICLE_COUNT) {
@@ -44,7 +45,6 @@ void loop() {
     tft.drawString("       ", CENTRE_X, TEXT_OFFSET); // hides particle count
     delay(999999999);
   } else {
-    prev = millis();
     OLD_PARTICLE_COUNT = GLOBAL_PARTICLE_COUNT;
     simulate(world, &tft);
     if (TIMER && OLD_PARTICLE_COUNT < GLOBAL_PARTICLE_COUNT) {
