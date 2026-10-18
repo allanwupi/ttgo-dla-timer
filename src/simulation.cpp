@@ -4,7 +4,7 @@
 
 int OLD_PARTICLE_COUNT = 0;
 int GLOBAL_PARTICLE_COUNT = 0;
-char buffer[7];
+char buffer[10];
 
 int VECTOR_X[NUM_WALK_DIRECTIONS] = {1, 1, 0, -1, -1, -1, 0, 1};
 int VECTOR_Y[NUM_WALK_DIRECTIONS] = {0, 1, 1, 1, 0, -1, -1, -1};
@@ -99,6 +99,7 @@ void simulate(int grid[][COLS], TFT_eSPI *tft) {
   }
   if (stick(grid, &p) == 1) {
     GLOBAL_PARTICLE_COUNT++;
+    remaining--;
     if (radius < MAX_SPAWN_RADIUS && GLOBAL_PARTICLE_COUNT % growth_bar == 0)
       radius = euclidean(grid) + margin;
     respawn = true;
@@ -113,11 +114,10 @@ void simulate(int grid[][COLS], TFT_eSPI *tft) {
     draw_screen = false;
     tft->setCursor(0,0);
     if (SHOW_PARTICLES) {
-        remaining = MAX_PARTICLE_COUNT - GLOBAL_PARTICLE_COUNT;
-        snprintf(buffer, sizeof(buffer), " %01d:%02d ", remaining/600, remaining/10 % 60);
+        snprintf(buffer, sizeof(buffer), "%01d:%02d", remaining/600, remaining/10 % 60);
         tft->drawString(buffer, CENTRE_X, TEXT_OFFSET);
     } else {
-        tft->drawString("       ", CENTRE_X, TEXT_OFFSET);
+        tft->drawString("    ", CENTRE_X, TEXT_OFFSET);
     }
   }
 }

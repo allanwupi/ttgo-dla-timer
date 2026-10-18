@@ -3,7 +3,7 @@
 
 // Treat these colours as constants
 uint32_t RGB_TEXT_COLOUR = TFT_WHITE;
-uint32_t BW_TEXT_COLOUR = TFT_GOLD;
+uint32_t BW_TEXT_COLOUR = TFT_WHITE;
 uint32_t RGB_LIVE_COLOUR = TFT_DARKGREY;
 uint32_t BW_LIVE_COLOUR = TFT_DARKGREY;
 uint32_t BACKGROUND_COLOUR = TFT_BLACK;
@@ -37,8 +37,8 @@ uint32_t SHADE[] = {
   0x94B2, // 18
   0x8430, // 16
   0x73AE, // 14
-  0x632C, // 12
-  0x528A, // 10
+  0x5ACB, // 11
+  0x4208, // 8
 };
 
 int STAGE[NUM_COLOURS] = {
