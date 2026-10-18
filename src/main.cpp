@@ -72,7 +72,7 @@ bool left_button_press(void) {
     static bool prevLeft = true;
     static bool currLeft = false;
     currLeft = !digitalRead(LEFT_PIN);
-    bool leftButtonPressed = (prevLeft && !currLeft);
+    bool leftButtonPressed = (!prevLeft && currLeft);
     prevLeft = currLeft;
     return leftButtonPressed;
 }
@@ -81,7 +81,7 @@ bool right_button_press(void) {
     static bool prevRight = true;
     static bool currRight = false;
     currRight = !digitalRead(RIGHT_PIN);
-    bool rightButtonPressed = (prevRight && !currRight);
+    bool rightButtonPressed = (!prevRight && currRight);
     prevRight = currRight;
     return rightButtonPressed;
 }
