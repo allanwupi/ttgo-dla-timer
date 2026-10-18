@@ -53,7 +53,7 @@ void loop() {
     if (OLD_PARTICLE_COUNT != GLOBAL_PARTICLE_COUNT) {
         calculated_delay = DELAY_MILLIS-error-millis()+prev;
         if (calculated_delay < 0) {
-            error = abs(calculated_delay);
+            error += abs(calculated_delay);
         } else {
             error = 0;
             delay(DELAY_MILLIS-millis()+prev);
