@@ -2,8 +2,9 @@
 #include "simulation.h"
 #include "math.h"
 
-int OLD_PARTICLE_COUNT = 0;
-int GLOBAL_PARTICLE_COUNT = 0;
+int prev_remaining = MAX_PARTICLE_COUNT;
+int curr_remaining = MAX_PARTICLE_COUNT;
+int particle_count = 0;
 char buffer[10];
 
 int VECTOR_X[NUM_WALK_DIRECTIONS] = {1, 1, 0, -1, -1, -1, 0, 1};
@@ -47,7 +48,7 @@ void spawn(int grid[][COLS], Walker *ptr, int radius) {
     }
     ptr->x = x;
     ptr->y = y;
-    ptr->age = GLOBAL_PARTICLE_COUNT;
+    ptr->age = particle_count;
     if (outOfBounds(grid, x, y) || grid[y][x] != EMPTY || abs(x-CENTRE_X)+abs(y-CENTRE_Y-TEXT_OFFSET_Y) < radius-5) {
         spawn(grid, ptr, radius);
     } else {
@@ -86,6 +87,11 @@ int stick(int grid[][COLS], Walker *ptr) {
     return 0;
 }
 
+void add_time(int seconds) {
+    prev_remaining += 10*seconds;
+    curr_remaining += 10*seconds;
+}
+
 void simulate(int grid[][COLS], TFT_eSPI *tft) {
     static Walker p = {.x = CENTRE_X, .y = CENTRE_Y + TEXT_OFFSET_Y};
     static int radius = 3;
@@ -93,14 +99,13 @@ void simulate(int grid[][COLS], TFT_eSPI *tft) {
     static int growth_bar = 20;
     static bool respawn = false;
     static bool draw_screen = false;
-    static int remaining = MAX_PARTICLE_COUNT;
     if (walk(grid, &p) == 1) {
         respawn = true;
     }
     if (stick(grid, &p) == 1) {
-        GLOBAL_PARTICLE_COUNT++;
-        remaining--;
-        if (radius < MAX_SPAWN_RADIUS && GLOBAL_PARTICLE_COUNT % growth_bar == 0)
+        particle_count++;
+        curr_remaining--;
+        if (radius < MAX_SPAWN_RADIUS && particle_count % growth_bar == 0)
             radius = euclidean(grid) + margin;
         respawn = true;
         draw_screen = true;
@@ -114,13 +119,13 @@ void simulate(int grid[][COLS], TFT_eSPI *tft) {
         draw_screen = false;
         tft->setCursor(0,0);
         if (SHOW_PARTICLES) {
-            snprintf(buffer, sizeof(buffer), " %01d:%02d ", remaining/600, remaining/10 % 60);
+            snprintf(buffer, sizeof(buffer), " %01d:%02d ", curr_remaining/600, curr_remaining/10 % 60);
             tft->drawString(buffer, CENTRE_X+TEXT_OFFSET_X, TEXT_OFFSET_Y);
         } else {
             tft->drawString("      ", CENTRE_X+TEXT_OFFSET_X, TEXT_OFFSET_Y);
         }
     }
-    if (GLOBAL_PARTICLE_COUNT >= MAX_PARTICLE_COUNT) {
+    if (curr_remaining <= 0) {
         tft->fillScreen(TIMEOUT_COLOUR);
         toggleColours(tft);
         drawGrid(grid, tft); // removes last live particle

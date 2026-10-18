@@ -37,14 +37,19 @@ void setup() {
 }
 
 void loop() {
-    if (left_button_press()) toggleColours(&tft);
-    if (right_button_press()) toggleParticles(&tft);
-    if (GLOBAL_PARTICLE_COUNT >= MAX_PARTICLE_COUNT) {
+    if (left_button_press()) {
+        add_time(30);
+        //toggleColours(&tft);
+    }
+    if (right_button_press()) {
+        toggleParticles(&tft);
+    }
+    if (curr_remaining <= 0) {
         delay(DELAY_MILLIS);
     } else {
-        OLD_PARTICLE_COUNT = GLOBAL_PARTICLE_COUNT;
+        prev_remaining = curr_remaining;
         simulate(world, &tft);
-        if (OLD_PARTICLE_COUNT != GLOBAL_PARTICLE_COUNT) {
+        if (prev_remaining != curr_remaining) {
             calculated_delay = DELAY_MILLIS-error-millis()+prev;
             if (calculated_delay < 0) {
                 error += abs(calculated_delay);

@@ -44,8 +44,9 @@ extern uint32_t *COLOURSCHEME;
 extern bool ENABLE_COLOUR;
 extern bool SHOW_PARTICLES;
 
-extern int OLD_PARTICLE_COUNT;
-extern int GLOBAL_PARTICLE_COUNT;
+extern int prev_remaining;
+extern int curr_remaining;
+extern int particle_count;
 extern int VECTOR_X[NUM_WALK_DIRECTIONS];
 extern int VECTOR_Y[NUM_WALK_DIRECTIONS];
 
@@ -57,6 +58,7 @@ void spawn(int grid[][COLS], Walker *ptr, int radius);
 bool outOfBounds(int grid[][COLS], int x, int y);
 int walk(int grid[][COLS], Walker *ptr);
 int stick(int grid[][COLS], Walker *ptr);
+void add_time(int seconds);
 
 // DISTANCE MEASURES
 int manhattan(int grid[][COLS]);
