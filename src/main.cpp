@@ -24,7 +24,7 @@ void setup() {
     tft.setTextColor(TEXT_COLOUR, BACKGROUND_COLOUR);
     tft.setTextDatum(TC_DATUM); 
     tft.setTextFont(0);
-    tft.setTextSize(5);
+    tft.setTextSize(6);
     randomSeed(analogRead(RANDOM_SEED_PIN));
 
     for (int x = 0; x < 30; x++) {
