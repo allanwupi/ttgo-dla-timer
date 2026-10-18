@@ -15,7 +15,7 @@ void seed(int grid[][COLS], int select) {
             for (int o = 0; o < 360; o += 2) {
             float angle = o * M_PI / 180.0;
             int x = round(80 * cos(angle) + CENTRE_X);
-            int y = round(80 * sin(angle) + CENTRE_Y);
+            int y = round(80 * sin(angle) + CENTRE_Y + TEXT_OFFSET_Y);
             grid[y][x] = DEAD;
             }
             break;
@@ -24,7 +24,7 @@ void seed(int grid[][COLS], int select) {
             break;
         case 0: // Centre
         default: //
-            grid[CENTRE_Y][CENTRE_X] = DEAD;
+            grid[CENTRE_Y + TEXT_OFFSET_Y][CENTRE_X] = DEAD;
     }
 }
 
@@ -40,7 +40,7 @@ void spawn(int grid[][COLS], Walker *ptr, int radius) {
     if (radius < MAX_SPAWN_RADIUS) {
         float angle = (float)random(0, 360) * M_PI / 180.0;
         x = radius * cos(angle) + CENTRE_X;
-        y = radius * sin(angle) + CENTRE_Y;
+        y = radius * sin(angle) + CENTRE_Y + TEXT_OFFSET_Y;
     } else {
         x = random(0,COLS);
         y = random(0,ROWS);
@@ -48,7 +48,7 @@ void spawn(int grid[][COLS], Walker *ptr, int radius) {
     ptr->x = x;
     ptr->y = y;
     ptr->age = GLOBAL_PARTICLE_COUNT;
-    if (outOfBounds(grid, x, y) || grid[y][x] != EMPTY || abs(x-CENTRE_X)+abs(y-CENTRE_Y) < radius-5) {
+    if (outOfBounds(grid, x, y) || grid[y][x] != EMPTY || abs(x-CENTRE_X)+abs(y-CENTRE_Y-TEXT_OFFSET_Y) < radius-5) {
         spawn(grid, ptr, radius);
     } else {
         grid[ptr->y][ptr->x] = LIVE;
@@ -87,7 +87,7 @@ int stick(int grid[][COLS], Walker *ptr) {
 }
 
 void simulate(int grid[][COLS], TFT_eSPI *tft) {
-    static Walker p = {.x = CENTRE_X, .y = CENTRE_Y};
+    static Walker p = {.x = CENTRE_X, .y = CENTRE_Y + TEXT_OFFSET_Y};
     static int radius = 3;
     static int margin = 0;
     static int growth_bar = 20;
@@ -120,6 +120,14 @@ void simulate(int grid[][COLS], TFT_eSPI *tft) {
             tft->drawString("      ", CENTRE_X+TEXT_OFFSET_X, TEXT_OFFSET_Y);
         }
     }
+    if (GLOBAL_PARTICLE_COUNT >= MAX_PARTICLE_COUNT) {
+        tft->fillScreen(TIMEOUT_COLOUR);
+        toggleColours(tft);
+        drawGrid(grid, tft); // removes last live particle
+        tft->setCursor(0,0);
+        tft->setTextColor(TEXT_COLOUR, TIMEOUT_COLOUR);
+        tft->drawString(" TIME ", CENTRE_X+TEXT_OFFSET_X, TEXT_OFFSET_Y); // hides particle count
+    }
 }
 
 int manhattan(int grid[][COLS]) {
@@ -128,7 +136,7 @@ int manhattan(int grid[][COLS]) {
     for (int x = 0; x < COLS; x++) {
         for (int y = 0; y < ROWS; y++) {
             if (grid[y][x] > 0) {
-                curr_dist = abs(x-CENTRE_X) + abs(y-CENTRE_Y);
+                curr_dist = abs(x-CENTRE_X) + abs(y-CENTRE_Y-TEXT_OFFSET_Y);
                 if (curr_dist > max_dist) {
                     max_dist = curr_dist;
                 }
@@ -144,7 +152,7 @@ int euclidean(int grid[][COLS]) {
     for (int x = 0; x < COLS; x++) {
         for (int y = 0; y < ROWS; y++) {
             if (grid[y][x] > 0) {
-                curr_dist = (x-CENTRE_X)*(x-CENTRE_X) + (y-CENTRE_Y)*(y-CENTRE_Y);
+                curr_dist = (x-CENTRE_X)*(x-CENTRE_X) + (y-CENTRE_Y-TEXT_OFFSET_Y)*(y-CENTRE_Y-TEXT_OFFSET_Y);
                 if (curr_dist > max_dist) {
                     max_dist = curr_dist;
                 }

@@ -35,6 +35,7 @@ int VECTOR_Y[NUM_WALK_DIRECTIONS] = {0, 1, 0, -1};*/
 extern uint32_t TEXT_COLOUR;
 extern uint32_t LIVE_COLOUR;
 extern uint32_t BACKGROUND_COLOUR;
+extern uint32_t TIMEOUT_COLOUR;
 extern uint32_t HUE[NUM_COLOURS];
 extern uint32_t SHADE[NUM_COLOURS];
 extern int STAGE[NUM_COLOURS];

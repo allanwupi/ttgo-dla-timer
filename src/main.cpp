@@ -5,12 +5,11 @@
 #define DEFAULT_ROTATION 4
 #define RANDOM_SEED_PIN 1
 #define DELAY_MILLIS 100
-#define LEFT 0
-#define RIGHT 14
+#define LEFT_PIN 0
+#define RIGHT_PIN 14
 
 TFT_eSPI tft = TFT_eSPI();
 int world[ROWS][COLS] = {0};
-uint32_t TIMEOUT_COLOUR = TFT_RED;
 long prev;
 long calculated_delay;
 long error = 0;
@@ -41,13 +40,7 @@ void loop() {
     if (left_button_press()) toggleColours(&tft);
     if (right_button_press()) toggleParticles(&tft);
     if (GLOBAL_PARTICLE_COUNT >= MAX_PARTICLE_COUNT) {
-        tft.fillScreen(TIMEOUT_COLOUR);
-        toggleColours(&tft);
-        drawGrid(world, &tft); // removes last live particle
-        tft.setCursor(0,0);
-        tft.setTextColor(TEXT_COLOUR, TIMEOUT_COLOUR);
-        tft.drawString(" TIME ", CENTRE_X+TEXT_OFFSET_X, TEXT_OFFSET_Y); // hides particle count
-        delay(999999999);
+        delay(DELAY_MILLIS);
     } else {
         OLD_PARTICLE_COUNT = GLOBAL_PARTICLE_COUNT;
         simulate(world, &tft);
@@ -67,7 +60,7 @@ void loop() {
 bool left_button_press(void) {
     static bool prevLeft = true;
     static bool currLeft = false;
-    currLeft = !digitalRead(LEFT);
+    currLeft = !digitalRead(LEFT_PIN);
     bool leftButtonPressed = (!prevLeft && currLeft);
     prevLeft = currLeft;
     return leftButtonPressed;
@@ -76,7 +69,7 @@ bool left_button_press(void) {
 bool right_button_press(void) {
     static bool prevRight = true;
     static bool currRight = false;
-    currRight = !digitalRead(RIGHT);
+    currRight = !digitalRead(RIGHT_PIN);
     bool rightButtonPressed = (!prevRight && currRight);
     prevRight = currRight;
     return rightButtonPressed;
