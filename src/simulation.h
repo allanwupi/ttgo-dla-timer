@@ -10,7 +10,7 @@
 #define CENTRE_Y 160
 #define CENTRE_X 85
 #define TEXT_OFFSET_Y 12
-#define TEXT_OFFSET_X 2
+#define TEXT_OFFSET_X 3
 #define NUM_COLOURS 10
 
 typedef enum {
