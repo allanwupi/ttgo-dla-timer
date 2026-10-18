@@ -42,8 +42,8 @@ void spawn(int grid[][COLS], Walker *ptr, int radius) {
     x = radius * cos(angle) + CENTRE_X;
     y = radius * sin(angle) + CENTRE_Y;
   } else {
-    x = random(0,COLS+1);
-    y = random(0,ROWS+1);
+    x = random(0,COLS);
+    y = random(0,ROWS);
   }
   ptr->x = x;
   ptr->y = y;

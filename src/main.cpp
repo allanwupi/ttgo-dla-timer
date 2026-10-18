@@ -8,7 +8,9 @@
 
 TFT_eSPI tft = TFT_eSPI();
 int world[ROWS][COLS] = {0};
-int prev;
+long prev;
+long calculated_delay;
+long error = 0;
 
 bool LEFT_BUTTON(void);
 bool RIGHT_BUTTON(void);
@@ -49,7 +51,13 @@ void loop() {
     OLD_PARTICLE_COUNT = GLOBAL_PARTICLE_COUNT;
     simulate(world, &tft);
     if (OLD_PARTICLE_COUNT != GLOBAL_PARTICLE_COUNT) {
-        delay(DELAY_MILLIS-millis()+prev);
+        calculated_delay = DELAY_MILLIS-error-millis()+prev;
+        if (calculated_delay < 0) {
+            error = abs(calculated_delay);
+        } else {
+            error = 0;
+            delay(DELAY_MILLIS-millis()+prev);
+        }
         prev = millis();
     }
   }
