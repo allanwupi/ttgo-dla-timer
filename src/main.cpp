@@ -48,8 +48,8 @@ void loop() {
     simulate(world, &tft);
     if (TIMER && OLD_PARTICLE_COUNT != GLOBAL_PARTICLE_COUNT) {
         delay(DELAY_MILLIS-millis()+prev);
+        prev = millis();
     }
-    prev = millis();
   }
 }
 
