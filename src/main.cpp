@@ -10,7 +10,7 @@
 
 TFT_eSPI tft = TFT_eSPI();
 int world[ROWS][COLS] = {0};
-uint32_t TIMEOUT_COLOUR = 0xC000;
+uint32_t TIMEOUT_COLOUR = TFT_RED;
 long prev;
 long calculated_delay;
 long error = 0;
