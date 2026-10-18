@@ -115,9 +115,9 @@ void simulate(int grid[][COLS], TFT_eSPI *tft) {
     tft->setCursor(0,0);
     if (SHOW_PARTICLES) {
         snprintf(buffer, sizeof(buffer), " %01d:%02d ", remaining/600, remaining/10 % 60);
-        tft->drawString(buffer, CENTRE_X+1, TEXT_OFFSET);
+        tft->drawString(buffer, CENTRE_X+3, TEXT_OFFSET);
     } else {
-        tft->drawString("      ", CENTRE_X+1, TEXT_OFFSET);
+        tft->drawString("      ", CENTRE_X+3, TEXT_OFFSET);
     }
   }
 }

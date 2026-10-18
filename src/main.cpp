@@ -36,13 +36,14 @@ void setup() {
 void loop() {
   if (LEFT_BUTTON()) toggleColours(&tft);
   if (RIGHT_BUTTON()) toggleParticles(&tft);
+  Serial.println(GLOBAL_PARTICLE_COUNT);
   if (GLOBAL_PARTICLE_COUNT >= MAX_PARTICLE_COUNT) {
     tft.fillScreen(TFT_RED);
     toggleColours(&tft);
     drawGrid(world, &tft); // removes last live particle
     tft.setCursor(0,0);
     tft.setTextColor(TEXT_COLOUR, TFT_RED);
-    tft.drawString(" TIME ", CENTRE_X+1, TEXT_OFFSET); // hides particle count
+    tft.drawString(" TIME ", CENTRE_X+3, TEXT_OFFSET); // hides particle count
     delay(999999999);
   } else {
     OLD_PARTICLE_COUNT = GLOBAL_PARTICLE_COUNT;
