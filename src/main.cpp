@@ -2,13 +2,15 @@
 #include <TFT_eSPI.h>
 #include "simulation.h"
 
+// Set font size 6 for < 10 minutes
+#define TIMER_FONT_SIZE 5
 #define DEFAULT_ROTATION 4
 #define RANDOM_SEED_PIN 1
-#define DELAY_MILLIS 100
 #define LEFT_PIN 0
 #define RIGHT_PIN 14
 
 TFT_eSPI tft = TFT_eSPI();
+int DELAY_MILLIS = (int) 1000 / PARTICLE_FREQUENCY;
 int world[ROWS][COLS] = {0};
 long prev;
 long calculated_delay;
@@ -23,7 +25,7 @@ void setup() {
     tft.setTextColor(TEXT_COLOUR, BACKGROUND_COLOUR);
     tft.setTextDatum(TC_DATUM); 
     tft.setTextFont(0);
-    tft.setTextSize(6);
+    tft.setTextSize(TIMER_FONT_SIZE);
     randomSeed(analogRead(RANDOM_SEED_PIN));
 
     for (int x = 0; x < 30; x++) {
@@ -48,7 +50,7 @@ void loop() {
         }
     }
     if (curr_remaining <= 0) {
-        delay(INFINITY);
+        delay(INT_MAX);
     } else {
         prev_remaining = curr_remaining;
         simulate(world, &tft);

@@ -3,6 +3,7 @@
 #include <TFT_eSPI.h>
 
 #define MAX_PARTICLE_COUNT 3000
+#define PARTICLE_FREQUENCY 2
 #define NUM_WALK_DIRECTIONS 8 // Moore
 #define MAX_SPAWN_RADIUS 85
 #define ROWS 320
@@ -12,8 +13,6 @@
 #define TEXT_OFFSET_Y 12
 #define TEXT_OFFSET_X 3
 #define NUM_COLOURS 10
-
-#define INFINITY 1000000
 
 typedef enum {
     OUT_OF_BOUNDS = -3,

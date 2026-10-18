@@ -88,8 +88,8 @@ int stick(int grid[][COLS], Walker *ptr) {
 }
 
 void add_time(int seconds) {
-    prev_remaining += 10*seconds;
-    curr_remaining += 10*seconds;
+    prev_remaining += PARTICLE_FREQUENCY*seconds;
+    curr_remaining += PARTICLE_FREQUENCY*seconds;
 }
 
 void simulate(int grid[][COLS], TFT_eSPI *tft) {
@@ -119,7 +119,8 @@ void simulate(int grid[][COLS], TFT_eSPI *tft) {
         draw_screen = false;
         tft->setCursor(0,0);
         if (SHOW_PARTICLES) {
-            snprintf(buffer, sizeof(buffer), " %01d:%02d ", curr_remaining/600, curr_remaining/10 % 60);
+            snprintf(buffer, sizeof(buffer), " %01d:%02d ",
+                curr_remaining/(60*PARTICLE_FREQUENCY), curr_remaining/PARTICLE_FREQUENCY % 60);
             tft->drawString(buffer, CENTRE_X+TEXT_OFFSET_X, TEXT_OFFSET_Y);
         } else {
             tft->drawString("      ", CENTRE_X+TEXT_OFFSET_X, TEXT_OFFSET_Y);
