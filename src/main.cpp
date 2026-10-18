@@ -10,7 +10,6 @@
 #define RIGHT_PIN 14
 
 TFT_eSPI tft = TFT_eSPI();
-int DELAY_MILLIS = (int) 1000 / PARTICLE_FREQUENCY;
 int world[ROWS][COLS] = {0};
 long prev;
 long calculated_delay;
@@ -19,6 +18,7 @@ bool left_button_press(void);
 bool right_button_press(void);
 
 void setup() {
+    //Serial.begin(115200);
     tft.init();
     tft.setRotation(DEFAULT_ROTATION);
     tft.fillScreen(BACKGROUND_COLOUR);
@@ -40,7 +40,7 @@ void setup() {
 void loop() {
     static int state = 0;
     if (left_button_press()) {
-        add_time(10);
+        scale_time();
     }
     if (right_button_press()) {
         state = state +1 % 4;
@@ -55,7 +55,7 @@ void loop() {
         prev_remaining = curr_remaining;
         simulate(world, &tft);
         if (prev_remaining != curr_remaining) {
-            calculated_delay = DELAY_MILLIS-error-millis()+prev;
+            calculated_delay = delay_millis-error-millis()+prev;
             if (calculated_delay < 0) {
                 error += abs(calculated_delay);
             } else {

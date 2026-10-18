@@ -2,10 +2,12 @@
 #include "simulation.h"
 #include "math.h"
 
+int particle_frequency = 10;
+int delay_millis = (int) 1000 / particle_frequency;
 int prev_remaining = MAX_PARTICLE_COUNT;
 int curr_remaining = MAX_PARTICLE_COUNT;
 int particle_count = 0;
-char buffer[10];
+char buffer[20];
 
 int VECTOR_X[NUM_WALK_DIRECTIONS] = {1, 1, 0, -1, -1, -1, 0, 1};
 int VECTOR_Y[NUM_WALK_DIRECTIONS] = {0, 1, 1, 1, 0, -1, -1, -1};
@@ -87,9 +89,21 @@ int stick(int grid[][COLS], Walker *ptr) {
     return 0;
 }
 
-void add_time(int seconds) {
-    prev_remaining += PARTICLE_FREQUENCY*seconds;
-    curr_remaining += PARTICLE_FREQUENCY*seconds;
+void scale_time() {
+    static int state = 0;
+    state = state +1 % 3;
+    switch (state) {
+        case 0:
+            particle_frequency = 10;
+            break;
+        case 1:
+            particle_frequency = 5;
+            break;
+        case 2:
+            particle_frequency = 2;
+            break;
+    }
+    delay_millis = (int) 1000 / particle_frequency;
 }
 
 void simulate(int grid[][COLS], TFT_eSPI *tft) {
@@ -119,11 +133,11 @@ void simulate(int grid[][COLS], TFT_eSPI *tft) {
         draw_screen = false;
         tft->setCursor(0,0);
         if (SHOW_PARTICLES) {
-            snprintf(buffer, sizeof(buffer), " %01d:%02d ",
-                curr_remaining/(60*PARTICLE_FREQUENCY), curr_remaining/PARTICLE_FREQUENCY % 60);
+            snprintf(buffer, sizeof(buffer), "  %01d:%02d  ",
+                curr_remaining/(60*particle_frequency), curr_remaining/particle_frequency % 60);
             tft->drawString(buffer, CENTRE_X+TEXT_OFFSET_X, TEXT_OFFSET_Y);
         } else {
-            tft->drawString("      ", CENTRE_X+TEXT_OFFSET_X, TEXT_OFFSET_Y);
+            tft->drawString("          ", CENTRE_X+TEXT_OFFSET_X, TEXT_OFFSET_Y);
         }
     }
     if (curr_remaining <= 0) {
@@ -132,7 +146,7 @@ void simulate(int grid[][COLS], TFT_eSPI *tft) {
         drawGrid(grid, tft); // removes last live particle
         tft->setCursor(0,0);
         tft->setTextColor(TEXT_COLOUR, TIMEOUT_COLOUR);
-        tft->drawString(" TIME ", CENTRE_X+TEXT_OFFSET_X, TEXT_OFFSET_Y); // hides particle count
+        tft->drawString("  TIME  ", CENTRE_X+TEXT_OFFSET_X, TEXT_OFFSET_Y); // hides particle count
     }
 }
 

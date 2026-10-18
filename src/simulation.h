@@ -3,7 +3,6 @@
 #include <TFT_eSPI.h>
 
 #define MAX_PARTICLE_COUNT 3000
-#define PARTICLE_FREQUENCY 2
 #define NUM_WALK_DIRECTIONS 8 // Moore
 #define MAX_SPAWN_RADIUS 85
 #define ROWS 320
@@ -45,6 +44,8 @@ extern uint32_t *COLOURSCHEME;
 extern bool ENABLE_COLOUR;
 extern bool SHOW_PARTICLES;
 
+extern int particle_frequency;
+extern int delay_millis;
 extern int prev_remaining;
 extern int curr_remaining;
 extern int particle_count;
@@ -59,7 +60,7 @@ void spawn(int grid[][COLS], Walker *ptr, int radius);
 bool outOfBounds(int grid[][COLS], int x, int y);
 int walk(int grid[][COLS], Walker *ptr);
 int stick(int grid[][COLS], Walker *ptr);
-void add_time(int seconds);
+void scale_time();
 
 // DISTANCE MEASURES
 int manhattan(int grid[][COLS]);
