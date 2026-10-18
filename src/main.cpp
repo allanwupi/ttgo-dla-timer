@@ -9,7 +9,6 @@
 TFT_eSPI tft = TFT_eSPI();
 int world[ROWS][COLS] = {0};
 int prev;
-int calculated_delay;
 
 bool LEFT_BUTTON(void);
 bool RIGHT_BUTTON(void);
@@ -32,10 +31,10 @@ void setup() {
     }
   }
   seed(world, 0);
+  prev = millis();
 }
 
 void loop() {
-  prev = millis();
   if (LEFT_BUTTON()) toggleColours(&tft);
   if (RIGHT_BUTTON()) toggleParticles(&tft);
   if (GLOBAL_PARTICLE_COUNT >= MAX_PARTICLE_COUNT) {
@@ -47,10 +46,10 @@ void loop() {
   } else {
     OLD_PARTICLE_COUNT = GLOBAL_PARTICLE_COUNT;
     simulate(world, &tft);
-    if (TIMER && OLD_PARTICLE_COUNT < GLOBAL_PARTICLE_COUNT) {
-        calculated_delay = DELAY_MILLIS-millis()+prev;
-        if (calculated_delay > 0) delay(calculated_delay);
+    if (TIMER && OLD_PARTICLE_COUNT != GLOBAL_PARTICLE_COUNT) {
+        delay(DELAY_MILLIS-millis()+prev);
     }
+    prev = millis();
   }
 }
 
