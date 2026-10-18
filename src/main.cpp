@@ -17,7 +17,6 @@ bool left_button_press(void);
 bool right_button_press(void);
 
 void setup() {
-    // Serial.begin(115200);
     tft.init();
     tft.setRotation(DEFAULT_ROTATION);
     tft.fillScreen(BACKGROUND_COLOUR);
@@ -37,15 +36,19 @@ void setup() {
 }
 
 void loop() {
+    static int state = 0;
     if (left_button_press()) {
-        add_time(30);
-        //toggleColours(&tft);
+        add_time(10);
     }
     if (right_button_press()) {
+        state = state +1 % 4;
         toggleParticles(&tft);
+        if (state % 2 == 0) {
+            toggleColours(&tft);
+        }
     }
     if (curr_remaining <= 0) {
-        delay(DELAY_MILLIS);
+        delay(INFINITY);
     } else {
         prev_remaining = curr_remaining;
         simulate(world, &tft);

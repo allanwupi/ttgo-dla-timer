@@ -13,6 +13,8 @@
 #define TEXT_OFFSET_X 3
 #define NUM_COLOURS 10
 
+#define INFINITY 1000000
+
 typedef enum {
     OUT_OF_BOUNDS = -3,
     LIVE = -2,
