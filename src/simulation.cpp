@@ -91,7 +91,7 @@ int stick(int grid[][COLS], Walker *ptr) {
 
 void scale_time() {
     static int state = 0;
-    state = state +1 % 3;
+    state = (state+1) % 3;
     switch (state) {
         case 0:
             particle_frequency = 10;

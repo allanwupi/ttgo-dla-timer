@@ -11,9 +11,8 @@
 
 TFT_eSPI tft = TFT_eSPI();
 int world[ROWS][COLS] = {0};
-long prev;
-long calculated_delay;
-long error = 0;
+unsigned long prev;
+unsigned long next;
 bool left_button_press(void);
 bool right_button_press(void);
 
@@ -43,27 +42,29 @@ void loop() {
         scale_time();
     }
     if (right_button_press()) {
-        state = state +1 % 4;
+        state = (state+1) % 4;
         toggleParticles(&tft);
         if (state % 2 == 0) {
             toggleColours(&tft);
         }
     }
+    unsigned long now = millis();
     if (curr_remaining <= 0) {
         delay(INT_MAX);
-    } else {
+    } else if (now >= next) {
         prev_remaining = curr_remaining;
         simulate(world, &tft);
         if (prev_remaining != curr_remaining) {
-            calculated_delay = delay_millis-error-millis()+prev;
-            if (calculated_delay < 0) {
-                error += abs(calculated_delay);
-            } else {
-                error = 0;
-                delay(calculated_delay);
+            next += delay_millis;
+            // catch up if we're behind
+            if ((long)(now - next) > 0) {
+                next = now;
             }
             prev = millis();
         }
+        //Serial.println(delay_millis);
+    } else {
+        delay(1);
     }
 }
 
@@ -71,7 +72,7 @@ bool left_button_press(void) {
     static bool prevLeft = true;
     static bool currLeft = false;
     currLeft = !digitalRead(LEFT_PIN);
-    bool leftButtonPressed = (!prevLeft && currLeft);
+    bool leftButtonPressed = (prevLeft && !currLeft);
     prevLeft = currLeft;
     return leftButtonPressed;
 }
@@ -80,7 +81,7 @@ bool right_button_press(void) {
     static bool prevRight = true;
     static bool currRight = false;
     currRight = !digitalRead(RIGHT_PIN);
-    bool rightButtonPressed = (!prevRight && currRight);
+    bool rightButtonPressed = (prevRight && !currRight);
     prevRight = currRight;
     return rightButtonPressed;
 }
