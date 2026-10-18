@@ -38,7 +38,6 @@ void setup() {
 void loop() {
   if (LEFT_BUTTON()) toggleColours(&tft);
   if (RIGHT_BUTTON()) toggleParticles(&tft);
-  Serial.println(GLOBAL_PARTICLE_COUNT);
   if (GLOBAL_PARTICLE_COUNT >= MAX_PARTICLE_COUNT) {
     tft.fillScreen(TFT_RED);
     toggleColours(&tft);
@@ -56,7 +55,7 @@ void loop() {
             error += abs(calculated_delay);
         } else {
             error = 0;
-            delay(DELAY_MILLIS-millis()+prev);
+            delay(calculated_delay);
         }
         prev = millis();
     }
