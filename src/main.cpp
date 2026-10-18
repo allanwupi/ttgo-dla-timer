@@ -12,7 +12,6 @@ int prev;
 
 bool LEFT_BUTTON(void);
 bool RIGHT_BUTTON(void);
-bool TIMER = true;
 
 void setup() {
   Serial.begin(115200);
@@ -43,12 +42,12 @@ void loop() {
     drawGrid(world, &tft); // removes last live particle
     tft.setCursor(0,0);
     tft.setTextColor(TEXT_COLOUR, TFT_RED);
-    tft.drawString("TIME", CENTRE_X, TEXT_OFFSET); // hides particle count
+    tft.drawString(" TIME ", CENTRE_X+1, TEXT_OFFSET); // hides particle count
     delay(999999999);
   } else {
     OLD_PARTICLE_COUNT = GLOBAL_PARTICLE_COUNT;
     simulate(world, &tft);
-    if (TIMER && OLD_PARTICLE_COUNT != GLOBAL_PARTICLE_COUNT) {
+    if (OLD_PARTICLE_COUNT != GLOBAL_PARTICLE_COUNT) {
         delay(DELAY_MILLIS-millis()+prev);
         prev = millis();
     }
