@@ -14,18 +14,18 @@
 #define NUM_COLOURS 10
 
 typedef enum {
-  OUT_OF_BOUNDS = -3,
-  LIVE = -2,
-  GARBAGE = -1,
-  EMPTY = 0,
-  DEAD = 1,
-  // positive values are ages which get mapped to colours
+    OUT_OF_BOUNDS = -3,
+    LIVE = -2,
+    GARBAGE = -1,
+    EMPTY = 0,
+    DEAD = 1,
+    // positive values are ages which get mapped to colours
 } State;
 
 typedef struct {
-  int x;
-  int y;
-  int age;
+    int x;
+    int y;
+    int age;
 } Walker;
 
 /*int VECTOR_X[NUM_WALK_DIRECTIONS] = {1, 0, -1, 0};
