@@ -3,8 +3,8 @@
 #include "simulation.h"
 
 // Set font size 6 for < 10 minutes
-#define TIMER_FONT_SIZE 5
-#define DEFAULT_ROTATION 4
+#define TIMER_FONT_SIZE 6
+#define DEFAULT_ROTATION 2
 #define RANDOM_SEED_PIN 1
 #define LEFT_PIN 0
 #define RIGHT_PIN 14
