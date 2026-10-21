@@ -11,6 +11,7 @@
 
 TFT_eSPI tft = TFT_eSPI();
 int world[ROWS][COLS] = {0};
+int screen_orientation = DEFAULT_ROTATION;
 unsigned long prev;
 unsigned long next;
 bool left_button_press(void);
@@ -19,7 +20,7 @@ bool right_button_press(void);
 void setup() {
     //Serial.begin(115200);
     tft.init();
-    tft.setRotation(DEFAULT_ROTATION);
+    tft.setRotation(screen_orientation);
     tft.fillScreen(BACKGROUND_COLOUR);
     tft.setTextColor(TEXT_COLOUR, BACKGROUND_COLOUR);
     tft.setTextDatum(TC_DATUM); 
@@ -42,10 +43,21 @@ void loop() {
         scale_time();
     }
     if (right_button_press()) {
-        state = (state+1) % 4;
-        toggleParticles(&tft);
-        if (state % 2 == 0) {
-            toggleColours(&tft);
+        state = state+1;
+        if (state == 5) {
+            if (screen_orientation == 2) {
+                screen_orientation = 4;
+            } else {
+                screen_orientation = 2;
+            }
+            tft.setRotation(screen_orientation);
+            tft.fillScreen(BACKGROUND_COLOUR);
+            state = 0;
+        } else {
+            toggleParticles(&tft);
+            if (state % 2 == 0) {
+                toggleColours(&tft);
+            }
         }
     }
     unsigned long now = millis();
@@ -62,7 +74,6 @@ void loop() {
             }
             prev = millis();
         }
-        //Serial.println(delay_millis);
     } else {
         delay(1);
     }
