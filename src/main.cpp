@@ -44,7 +44,7 @@ void loop() {
     }
     if (right_button_press()) {
         state = state+1;
-        if (state == 5) {
+        if (state == 4) {
             if (screen_orientation == 2) {
                 screen_orientation = 4;
             } else {
@@ -53,11 +53,10 @@ void loop() {
             tft.setRotation(screen_orientation);
             tft.fillScreen(BACKGROUND_COLOUR);
             state = 0;
-        } else {
-            toggleParticles(&tft);
-            if (state % 2 == 0) {
-                toggleColours(&tft);
-            }
+        }
+        toggleParticles(&tft);
+        if (state % 2 == 0) {
+            toggleColours(&tft);
         }
     }
     unsigned long now = millis();
